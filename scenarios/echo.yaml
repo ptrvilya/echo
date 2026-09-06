@@ -1,0 +1,132 @@
+amass:
+  fps_train: 30
+  fps_eval: 30
+  include_fake_object: true
+  preload_files: true
+behave:
+  sample_weight: 1
+  preload_files: true
+  obj2classid:
+    backpack: 0
+    boxlong: 1
+    boxtiny: 2
+    stool: 3
+    tablesquare: 4
+    yogaball: 5
+    boxmedium: 6
+    chairblack: 7
+    monitor: 8
+    suitcase: 9
+    toolbox: 10
+    yogamat: 11
+    boxlarge: 12
+    boxsmall: 13
+    chairwood: 14
+    plasticcontainer: 15
+    tablesmall: 16
+    trashbin: 17
+omomo:
+  sample_weight: 1
+  preload_files: true
+  obj2classid:
+    clothesstand: 18
+    floorlamp: 19
+    largebox: 20
+    largetable: 21
+    luggage: 22
+    mop: 23
+    plasticbox: 24
+    screen: 25
+    smallbox: 26
+    smalltable: 27
+    trashcan: 28
+    tripod: 29
+    vacuum: 30
+    whitechair: 31
+    woodchair: 32
+model_denoising:
+  name: hoic_xdit
+  dim_intermediate_embedding: 256
+  dim_embedding: 512
+  params:
+    dim_feedforward: 1024
+model_conditioning:
+  use_hmd_feature_conditioning: true
+  dim_cond_hmd: 52
+  condition_drop_prob: 0.1
+  use_pointnext_conditioning: true
+  use_class_conditioning: true
+  dim_cond_class: 34
+  separate_fake_object: true
+  fourier_encoding_freqs: 3
+  use_prefix_conditioning: true
+  prefix_prob: 0.4
+  prefix_len_max: 30
+  prefix_noise_std: 0.0
+model:
+  dim_motion_feature: 6
+  dim_output_motion: 6
+  dim_output_object: 9
+  num_joints: 21
+  window_size: 60
+  denoise_mode: sample
+  beta_start: 1.0e-05
+  beta_end: 0.008
+  beta_schedule: linear
+  object_pose: relative
+  dim_contacts_hoi: 64
+  dim_contacts_env: 8
+  include_env_contact: true
+  include_hoi_contact: true
+model_mesh:
+  type: smplx
+  num_betas: 10
+  include_object: false
+  with_skin: false
+  inference_chunk_size: 10000
+run:
+  datasets:
+  - amass
+  - behave
+  - omomo
+dataloader:
+  batch_size: 512
+  batch_size_val: 512
+  workers: 10
+  sampler: weighted
+  num_samples_per_epoch: 100000
+train:
+  mixed_precision: bf16
+  compile_denoiser: true
+  ema_decay: 0.9999
+  limit_train_batches: null
+  limit_val_batches: 250
+  log_step_freq: 50
+  val_freq: 50
+  checkpoint_freq: 10000
+  max_steps: 400000
+  loss_t_stamp_threshold: 200
+  infer_meshesfalse: true
+  aux_loss_warmup_steps: 10000
+  aux_loss_ramp_steps: 2500
+  losses:
+    denoise_motion: 50.0
+    denoise_object: 5.0
+    denoise_contact_env_mse: 1.0
+    denoise_contact_hoi_mse: 3.0
+    obj_smooth: 0.01
+    obj_velocity: 0.01
+    sbj_joints: 0.01
+    sbj_skate: 0.01
+sample:
+  modalities: "111"
+  mode: sample_inpaint
+  alpha: 0.4
+  slice_strategy: "deterministic_w_overlap"
+  overlap_size: 30
+logging:
+  wandb: true
+optimizer:
+  lr: 5e-4
+  weight_decay: 0.00001
+  clip_grad_norm: 1.0

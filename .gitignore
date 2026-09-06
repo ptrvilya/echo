@@ -1,0 +1,13 @@
+.DS_Store
+*.pyc
+/data/
+/experiments/
+/.vscode/
+.idea/
+__pycache__/
+.env
+/ipynb/artifacts/
+.ipynb_checkpoints
+/archive/
+/echo.egg-info/
+imgui.ini

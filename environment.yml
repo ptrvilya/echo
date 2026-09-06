@@ -1,0 +1,28 @@
+name: echo
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+- python=3.10
+- pip
+- numpy
+- scipy
+- scikit-learn
+- gxx_linux-64  # C++ compiler for torch.compile (inductor CPU kernels)
+- pip:
+  - --index-url https://download.pytorch.org/whl/cu128
+  - --extra-index-url https://pypi.python.org/simple
+  - torch==2.9.1
+  - diffusers
+  - transformers
+  - smplx
+  - omegaconf
+  - wandb
+  - h5py
+  - trimesh
+  - joblib
+  - tqdm
+  - einops
+  - rotary-embedding-torch
+  - matplotlib
+  - smplfitter
