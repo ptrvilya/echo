@@ -66,7 +66,7 @@ The steps are described in [docs/data.md](./docs/data.md).
 
 
 ## Pre-trained models and evaluation
-Pre-trained model: [link](https://nc.mlcloud.uni-tuebingen.de/index.php/s/dStmr3y6gTNte3D).
+Pre-trained model: [link](https://drive.google.com/file/d/129CLzZQ2MLegK3-b4RxtZKPalrnLrUus/view?usp=sharing).
 Place the checkpoint under `./assets/` and pass the path via `resume.checkpoint`.
 
 The command below runs sampling on the test splits. Parameter `sample.modalities` controls which modalities are
